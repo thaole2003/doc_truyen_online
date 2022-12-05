@@ -10,6 +10,10 @@
         
         if (isset($id) && ($id != "")) echo $id; ?>">
         <br>
+        <label class="font-medium text-xl ">Ảnh chụp hóa đơn</label><br>
+        <img class="w-[400px] h-[500px]" src="../content/uploads/bill/<?= $bill_one['images'] ?>" alt="">
+
+        <br>
         <label class="font-medium text-xl ">Tình trạng</label><br>
         <span class='text-red-500'><?php echo isset( $_SESSION['err_whynot'])?  $_SESSION['err_whynot']:'' ?>
         <?php unset( $_SESSION['err_whynot'])?>
@@ -47,8 +51,8 @@
         </p>
         <br>
         <div class="py-2">
-            <button class="bg-orange-400 hover:bg-white hover:text-orange-400 font-medium text-white p-2 px-4  border-solid border border-yellow-400" name="cap_nhat">Cập nhật</button>
-            <button class="bg-orange-400 hover:bg-white hover:text-orange-400 font-medium text-white p-2 px-4  border-solid border border-yellow-400"><a href="index.php?act=lisk_bill">Danh sách</a></button>
+            <button class="bg-orange-400 hover:bg-blue-500 hover:text-orange-400 font-medium text-white p-2 px-4  border-solid border border-yellow-400" name="cap_nhat">Cập nhật</button>
+            <button class="bg-orange-400 hover:bg-blue-500 hover:text-orange-400 font-medium text-white p-2 px-4  border-solid border border-yellow-400"><a href="index.php?act=lisk_bill">Danh sách</a></button>
         </div>
     </form>
 </div>

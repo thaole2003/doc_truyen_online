@@ -17,8 +17,8 @@ include_once "./DAO/comic.php";
 include_once  "./DAO/bill.php";
 $list_all_loai = load_all_loai();
 include_once  "./DAO/user.php";
-if(isset($_SESSION['auth'])){
-    $select_tb= select_tb($_SESSION['auth']['id']);
+if (isset($_SESSION['auth'])) {
+    $select_tb = select_tb($_SESSION['auth']['id']);
 }
 include_once  "views/header_home_footer/header.php";
 include "global.php";
@@ -54,74 +54,6 @@ if (isset($_POST['search'])) {
     }
 }
 
-// Đăng ký user
-// echo "<pre>";
-// var_dump($list_email);
-// echo "<pre>";
-if (isset($_POST['dang_ky'])) {
-    $email = trim($_POST['email']);
-    $name = trim($_POST['name']);
-    $phone = trim($_POST['phone']);
-    $address = trim($_POST['address']);
-    $password = trim($_POST['pass']);
-    $re_password = trim($_POST['password']);
-    $hash_password = password_hash($password, PASSWORD_DEFAULT);
-    $role = 2;
-    $count_email = count_email_input($email);
-    $flag_register = true;
-    // validate email 
-    if ($email == "") {
-        $flag_register = false;
-        $err_email = "Email không được để trống";
-    } elseif (!emailValid($email)) {
-        $flag_register = false;
-        $err_email = "Email chưa đúng định dạng mail";
-    } elseif ($count_email != 0) {
-        $flag_register = false;
-        $err_email = "Email đã tồn tại";
-    }
-    // validate name
-    if ($name == "") {
-        $flag_register = false;
-        $err_name = "Name không được để trống";
-    }
-    //validate phone
-    if ($phone == "") {
-        $flag_register = false;
-        $err_phone = "Số điện thoại không được để trống";
-    } elseif (!isVietnamesePhoneNumber($phone)) {
-        $flag_register = false;
-        $err_phone = "Số điện thoại chưa đúng định dạng";
-    }
-    // validate địa chỉ
-    if ($address == "") {
-        $flag_register = false;
-        $err_address = "Địa chỉ không được để trống";
-    }
-    // validate password
-    if ($password == "") {
-        $flag_register = false;
-        $err_pass = "Mật khẩu không được để trống";
-    } elseif (!isPassword($password)) {
-        $flag_register = false;
-        $err_pass = "Mật khẩu phải tối thiểu 8 ký tự và ít nhất 1 chữ cái, 1 số";
-    }
-    if ($re_password == "") {
-        $flag_register = false;
-        $err_repassword = "Mật khẩu nhập lại không được để trống";
-    } elseif ($password != $re_password) {
-        $flag_register = false;
-        $err_repassword = "Mật khẩu và mật khẩu nhập lại phải trùng nhau";
-    }
-    if ($flag_register) {
-        insert_khach_hang($email, $hash_password, $name, $phone, $address, $role);
-        $thongbao = "Đăng ký tài khoản thành công";
-    } else {
-        $thongbao = "Đăng ký tài khoản thất bại";
-    }
-}
-
-
 if (isset($_GET['act']) && $_GET['act'] != "") {
     $act = $_GET['act'];
 
@@ -135,11 +67,9 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
                 $client_chapter = client_chapter($id);
             }
             $comic = comic_select_one($id);
-            // echo '<pre>';
-            // print_r($client_chapter);
-            // die;
+
             if ($comic['vip'] == 1) {
-                if(isset($_SESSION['auth'])){
+                if (isset($_SESSION['auth'])) {
                     if ($comic['price'] > $_SESSION['auth']['coin']) {
                         $_SESSION['khong_du_coin'] = "Bạn không đủ coin để đọc truyện hãy nạp thêm";
                         header('location: index.php?act=detail&id=' . $id);
@@ -147,10 +77,10 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
                         $coin = $comic['price'];
                         $id_user = $_SESSION['auth']['id'];
 
-                        if(check_his($id,$id_user) == ""){
+                        if (check_his($id, $id_user) == "") {
                             update_tru_coin($id_user, $coin);
                         }
-    
+
                         $user = get_one_user($id_user);
                         $_SESSION['auth'] = [
                             'id' => $user['id'],
@@ -162,15 +92,15 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
                             'phone' => $user['phone'],
                             'address' => $user['address']
                         ];
-                        header('location: index.php?act=reload_comic&id=' . $id.'&number_chapter='.$number_chapter.'&noi_dung='.$noi_dung);
+                        header('location: index.php?act=reload_comic&id=' . $id . '&number_chapter=' . $number_chapter . '&noi_dung=' . $noi_dung);
                     }
-                }else{
+                } else {
                     $_SESSION['hay_dn'] = "Hãy đăng nhập để đọc truyện Svip";
                     header('location: index.php?act=detail&id=' . $id);
                 }
             } else {
                 update_view($id);
-                $doc_truyen = img_comic($id,$number_chapter);
+                $doc_truyen = img_comic($id, $number_chapter);
                 if (isset($_SESSION['auth'])) {
                     $update = true;
                     $history_comic_byuser = select_history_comic_by_user($_SESSION['auth']['id']);
@@ -196,7 +126,7 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
                 $comic = comic_select_one($id);
 
                 update_view($id);
-                $doc_truyen = img_comic($id,$number_chapter);
+                $doc_truyen = img_comic($id, $number_chapter);
                 if (isset($_SESSION['auth'])) {
                     $update = true;
                     $history_comic_byuser = select_history_comic_by_user($_SESSION['auth']['id']);
@@ -291,12 +221,12 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
             if (isset($_POST['dmk'])) {
                 if (strlen($_POST['pass_befor']) == 0) {
                     $flag_change = false;
-                    $_SESSION['err_pb'] = 'yêu cầu nhập mật khẩu';
+                    $_SESSION['err_pb'] = 'Yêu cầu nhập mật khẩu';
                 } else {
                     if (password_verify($_POST['pass_befor'], $select_pass['password'])) {
                         $flag_change = true;
                     } else {
-                        $_SESSION['err_pb'] = 'mật khẩu cũ không đúng';
+                        $_SESSION['err_pb'] = 'Mật khẩu cũ không đúng';
                         unset($_SESSION['err_pw']);
                         unset($_SESSION['err_rp']);
                     }
@@ -304,20 +234,20 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
 
                 if (strlen($_POST['passw_new']) == 0) {
                     $flag_change = false;
-                    $_SESSION['err_pw'] = 'yêu cầu nhập mật khẩu mới';
+                    $_SESSION['err_pw'] = 'Yêu cầu nhập mật khẩu mới';
                 }
                 if (strlen($_POST['repass']) == 0) {
                     $flag_change = false;
-                    $_SESSION['err_rp'] = 'yêu cầu nhập lại mật khẩu';
+                    $_SESSION['err_rp'] = 'Yêu cầu nhập lại mật khẩu';
                 }
                 if (strlen($_POST['passw_new']) != 0) {
                     if (!isPassword($_POST['passw_new'])) {
                         $flag_change = false;
-                        $_SESSION['err_pw'] = 'mật khẩu phải đúng định dạng';
+                        $_SESSION['err_pw'] = 'Mật khẩu phải đúng định dạng';
                     }
                     if ($_POST['passw_new'] == $_POST['pass_befor']) {
                         $flag_change = false;
-                        $_SESSION['err_pw'] = 'mật khẩu mới phải khác mật khẩu cũ';
+                        $_SESSION['err_pw'] = 'Mật khẩu mới phải khác mật khẩu cũ';
                     }
                 }
 
@@ -325,7 +255,7 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
                 if (strlen($_POST['repass']) != 0) {
                     if ($_POST['repass'] != $_POST['passw_new']) {
                         $flag_change = false;
-                        $_SESSION['err_rp'] = 'mật khẩu mới phải trùng nhau';
+                        $_SESSION['err_rp'] = 'Mật khẩu mới phải trùng nhau';
                     }
                 }
                 if ($flag_change == true) {
@@ -354,6 +284,12 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
             }
             if (isset($id_ma_loai)) {
                 $all_comic_by_categoryid =  all_comic_by_categoryid($id_ma_loai);
+                include_once "./views/loai.php";
+            }
+            if (isset($_GET['ma_svip'])) {
+                $all_svip = all_svip();
+                // echo '<pre>';
+                // print_r($all_svip);
                 include_once "./views/loai.php";
             }
             break;
@@ -420,6 +356,8 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
                             } catch (Exception $e) {
                                 echo 'Message could not be sent. Mailer Error: ', $mail->ErrorInfo;
                             }
+                        }else{
+                            $_SESSION['err_pw_em'] = 'Email chưa đăng ký!'; 
                         }
                     }
                 }
@@ -478,6 +416,7 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
             $load_cmt = load_all_comic_byid($id);
             $client_chapter = client_chapter($id);
 
+            //truyện yêu thích
             if (isset($_POST['love_comic'])) {
                 if (isset($_SESSION['auth'])) {
                     isert_comic($detail_comic['id'], $_SESSION['auth']['id']);
@@ -493,6 +432,7 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
                 update_dislike($detail_comic['id']);
                 header("location: " . $_SERVER['HTTP_REFERER']);
             }
+            //comment
             if (isset($_POST['cmt'])) {
                 if (isset($_SESSION['auth'])) {
                     unset($_SESSION['err_not_dn']);
@@ -513,12 +453,73 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
                     $_SESSION['err_not_dn'] = 'Bạn hãy đăng nhập để comment';
                     header("location: " . $_SERVER['HTTP_REFERER']);
                 }
-
             }
             include_once './views/chi_tiet_truyen.php';
             break;
             // dang ky
         case 'register':
+            if (isset($_POST['dang_ky'])) {
+                $email = trim($_POST['email']);
+                $name = trim($_POST['name']);
+                $phone = trim($_POST['phone']);
+                $address = trim($_POST['address']);
+                $password = trim($_POST['pass']);
+                $re_password = trim($_POST['password']);
+                $hash_password = password_hash($password, PASSWORD_DEFAULT);
+                $role = 2;
+                $count_email = count_email_input($email);
+                $flag_register = true;
+                // validate email 
+                if ($email == "") {
+                    $flag_register = false;
+                    $err_email = "Email không được để trống";
+                } elseif (!emailValid($email)) {
+                    $flag_register = false;
+                    $err_email = "Email chưa đúng định dạng mail";
+                } elseif ($count_email != 0) {
+                    $flag_register = false;
+                    $err_email = "Email đã tồn tại";
+                }
+                // validate name
+                if ($name == "") {
+                    $flag_register = false;
+                    $err_name = "Name không được để trống";
+                }
+                //validate phone
+                if ($phone == "") {
+                    $flag_register = false;
+                    $err_phone = "Số điện thoại không được để trống";
+                } elseif (!isVietnamesePhoneNumber($phone)) {
+                    $flag_register = false;
+                    $err_phone = "Số điện thoại chưa đúng định dạng";
+                }
+                // validate địa chỉ
+                if ($address == "") {
+                    $flag_register = false;
+                    $err_address = "Địa chỉ không được để trống";
+                }
+                // validate password
+                if ($password == "") {
+                    $flag_register = false;
+                    $err_pass = "Mật khẩu không được để trống";
+                } elseif (!isPassword($password)) {
+                    $flag_register = false;
+                    $err_pass = "Mật khẩu phải tối thiểu 8 ký tự và ít nhất 1 chữ cái, 1 số";
+                }
+                if ($re_password == "") {
+                    $flag_register = false;
+                    $err_repassword = "Mật khẩu nhập lại không được để trống";
+                } elseif ($password != $re_password) {
+                    $flag_register = false;
+                    $err_repassword = "Mật khẩu và mật khẩu nhập lại phải trùng nhau";
+                }
+                if ($flag_register) {
+                    insert_khach_hang($email, $hash_password, $name, $phone, $address, $role);
+                    $thongbao = "Đăng ký tài khoản thành công";
+                } else {
+                    $thongbao = "Đăng ký tài khoản thất bại";
+                }
+            }
             include "views/register.php";
             break;
             //Nạp coin
@@ -526,10 +527,10 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
             include "views/coin.php";
             break;
         case 'del_tb':
-            if(isset($_GET['id'])){
+            if (isset($_GET['id'])) {
                 $id = $_GET['id'];
-                
-            }del_tb($id);
+            }
+            del_tb($id);
             header("location:index.php");
             break;
         case 'chi_tiet_coin':
@@ -564,13 +565,13 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
                 $address = $_SESSION['auth']['address'];
                 $phone = $_SESSION['auth']['phone'];
                 $status = 0;
-                $flag_bill=true;
+                $flag_bill = true;
                 // echo '<pre>';
                 // var_dump($_FILES["fileupload"]);
                 // die;
-                if ($_FILES["fileupload"]['name']=='') {
+                if ($_FILES["fileupload"]['name'] == '') {
                     $_SESSION['bill'] = 'Không tồn tại file để upload';
-                    include "views/chi_tiet_coin.php";   
+                    include "views/chi_tiet_coin.php";
                     break;
                 } else {
                     //đã tồn tại
@@ -584,7 +585,7 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
                     $imageFileType = pathinfo($target_file, PATHINFO_EXTENSION);
 
                     //định dạng được chấp nhận
-                    $allowType = ['jpg', 'png','JPG','PNG'];
+                    $allowType = ['jpg', 'png', 'JPG', 'PNG'];
 
                     //kiểm tra xem phải ảnh ko nếu là ảnh thì trả về true ngược lại
                     //ko là ảnh trả về false
@@ -592,44 +593,34 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
                     if ($check == false) {
                         $_SESSION['bill'] = "Đây không phải là file ảnh";
                         $flag_bill = false;
-                        include "views/chi_tiet_coin.php";   
+                        include "views/chi_tiet_coin.php";
                         break;
-                        
-                    }
-
-                    else{
+                    } else {
                         if (!in_array($imageFileType, $allowType)) {
                             $_SESSION['bill'] = "Chỉ được upload những định dạng jpg, jpeg,png";
                             $flag_bill = false;
-                            include "views/chi_tiet_coin.php";   
+                            include "views/chi_tiet_coin.php";
                             break;
                         }
                         if (file_exists($target_file)) {
-                            $_SESSION['bill']= ' file đã tồn tại trên sever không được ghi đè';
+                            $_SESSION['bill'] = ' file đã tồn tại trên sever không được ghi đè';
                             $flag_bill = false;
-                            include "views/chi_tiet_coin.php";   
+                            include "views/chi_tiet_coin.php";
                             break;
                         }
                     }
-              
-          
+
+
 
                     if ($flag_bill == true) {
                         //xử lý di chuyển file tạm vào thư mục cần lưu trữ
                         $name_img = $_FILES["fileupload"]["name"];
                         // Upload file
                         move_uploaded_file($_FILES['fileupload']['tmp_name'],  $target_file);
-                        insert_bill($id_user, $name, $price, $email, $address, $phone, $status, $date,$name_img);
+                        insert_bill($id_user, $name, $price, $email, $address, $phone, $status, $date, $name_img);
                         header('location:index.php?act=hoa_don');
                     }
                 }
-                
-                  
-                    
-               
-                 
-
-                
             }
             break;
             //Hoa_don
@@ -650,39 +641,40 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
                 $thong_bao = 'Xóa thành công';
             }
             break;
-            case "lien_he":
-                unset($_SESSION['send_hoten']);
-                unset($_SESSION['send_email']);
-                unset($_SESSION['send_comment']);
-                if(isset($_POST['btn_send'])){
-                    $flag_send = true;
-                    if(strlen(trim($_POST['ho_ten']))==0){
+        case "lien_he":
+            unset($_SESSION['send_hoten']);
+            unset($_SESSION['send_email']);
+            unset($_SESSION['send_comment']);
+            if (isset($_POST['btn_send'])) {
+                $flag_send = true;
+                if (strlen(trim($_POST['ho_ten'])) == 0) {
+                    $flag_send = false;
+                    $_SESSION['send_hoten'] = 'không được để trống';
+                }
+                if (strlen(trim($_POST['email'])) == 0) {
+                    $flag_send = false;
+                    $_SESSION['send_email'] = 'không được để trống';
+                } else {
+                    if (!emailValid(trim($_POST['email']))) {
                         $flag_send = false;
-                        $_SESSION['send_hoten']='không được để trống';
-                    }
-                    if(strlen(trim($_POST['email']))==0){
-                        $flag_send = false;
-                        $_SESSION['send_email']='không được để trống';
-                    } 
-                      if (!emailValid(trim($_POST['email']))) {
-                        $flag_send = false;
-                        $_SESSION['send_email']='Email phải đúng định dạng';
-                    }
-                    if(strlen(trim($_POST['comment']))==0){
-                        $flag_send = false;
-                        $_SESSION['send_comment']='không được để trống';
-                    }
-                 
-                    if($flag_send ==true){
-                        unset($_SESSION['send_hoten']);
-                        unset($_SESSION['send_email']);
-                        unset($_SESSION['send_comment']);
-                        add_contact(trim($_POST['ho_ten']),trim($_POST['email']),trim($_POST['comment']));
-                        $_SESSION['send_succes']='Đã gửi ý kiến của bạn';
+                        $_SESSION['send_email'] = 'Email phải đúng định dạng';
                     }
                 }
-                include_once 'views/lienhe.php';
-                break;
+                if (strlen(trim($_POST['comment'])) == 0) {
+                    $flag_send = false;
+                    $_SESSION['send_comment'] = 'không được để trống';
+                }
+
+                if ($flag_send == true) {
+                    unset($_SESSION['send_hoten']);
+                    unset($_SESSION['send_email']);
+                    unset($_SESSION['send_comment']);
+                    add_contact(trim($_POST['ho_ten']), trim($_POST['email']), trim($_POST['comment']));
+                    $_SESSION['send_succes'] = 'Đã gửi ý kiến của bạn';
+                }
+            }
+            include_once 'views/lienhe.php';
+            break;
             //Phân trang 1 2 3 ...
         case 'trang':
             if (isset($_GET['id'])) {
@@ -708,4 +700,3 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
 include_once "views/header_home_footer/footer.php";
 ?>
 <img src="./" alt="">
-

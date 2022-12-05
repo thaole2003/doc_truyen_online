@@ -1,18 +1,18 @@
 <!-- content  -->
 <div class="py-4 w-full">
     <div class="">
-        <h1 class="text-xl font-medium p-4">Danh sách coin</h1>
+        <h1 class="text-xl font-medium p-4">Danh sách hóa đơn</h1>
     </div>
     <div class="p-4">
         <form action="index.php?act=search_bill" method="POST">
-            <input type="text" name="key_search" class="w-[300px] h-[44px]  border border-solid border-yellow-400">
+            <input placeholder="Mời nhập tên người dùng muốn tìm kiếm" type="text" name="key_search" class="w-[300px] h-[44px]  border border-solid border-yellow-400">
             <select name="status" class="p-2 px-4 rounded-md h-[44px]">
                 <option value="3" selected>Tất cả</option>
                 <option class="font-medium text-xl" value="0">Đang xử lý</option>
                 <option class="font-medium text-xl" value="1">Giao dịch thành công</option>
                 <option class="font-medium text-xl" value="2">Giao dịch thất bại</option>
             </select>
-            <button class="bg-orange-400 hover:bg-white hover:text-orange-400 font-medium text-white p-2 px-4  border-solid border border-yellow-400" name="btn_search">Tìm kiếm</button>
+            <button class="bg-orange-400 hover:bg-blue-500 hover:text-orange-400 font-medium text-white p-2 px-4  border-solid border border-yellow-400" name="btn_search">Tìm kiếm</button>
         </form>
     </div>
     <div class="p-4">
@@ -67,11 +67,11 @@
                             <td class="p-2 border-2 border-solid "><?= number_format($price); ?> VNĐ</td>
                             <td class="p-2 border-2 border-solid " style="color: <?= $color ?>"><?= $status ?></td>
                             <td class="p-2 border-2 border-solid "><img class="w-[50px] h-[70px]" src="../content/uploads/bill/<?= $images ?>" alt="">  </td>
-                            <td class="p-2 border-2 border-solid ">
+                            <td class="p-2 border-2 border-solid " style="width: 150px;">
                                 <?php
                                 if ($status != "Giao dịch thành công") {
                                 ?>
-                                    <button class="bg-orange-400 hover:bg-white hover:text-orange-400 font-medium text-white p-2 px-3 border-solid border border-yellow-400"><a href="<?= $sua_bill ?>">Cập nhật</a></button>
+                                    <a class="bg-orange-400 hover:bg-blue-500 hover:text-orange-400 font-medium text-white p-1 px-1  border-solid border border-yellow-300" href="<?= $sua_bill ?>">Cập nhật</a>
                                 <?php
                                 }
                                 ?>
