@@ -82,9 +82,10 @@ if (is_array($load_all_comic)) {
             <img class="w-[200px] h-[200px]" src="../content/uploads/cover_img/<?php echo $cover_image ?>" />
         </div><br>
         <input class="border-0 my-2 focus:outline-none border-solid border p-1 border-yellow-400 w-full  h-[40px] " type="file" name="cover_image" placeholder="Ảnh bìa"><br>
-        <b style="color: red;"><?php echo isset($thong_bao) ? $thong_bao : "" ?></b>
-        <b style="color: red;"><?php echo isset($khong_phai_anh) ? $khong_phai_anh : "" ?></b>
-        <b style="color: red;"><?php echo isset($loi_dinh_dang) ? $loi_dinh_dang : "" ?></b>
+        <span style="color: red; font-weight:bold;"><?php echo isset($_SESSION['khong_phai_anh']) ? $_SESSION['khong_phai_anh'] : "" ?></span><br>
+        <span style="color: red; font-weight:bold;"><?php echo isset($_SESSION['dinh_dang']) ? $_SESSION['dinh_dang'] : "" ?></span>
+        <?php unset($_SESSION['khong_phai_anh']);
+        unset($_SESSION['dinh_dang']); ?><br>
         <label class="font-medium">Detail</label>
         <br>
         <textarea class=" border-0 my-2 focus:outline-none border-solid border border-yellow-400 w-full  " name="detail" id="" cols="30" rows="10"><?php if (isset($detail) && ($detail != "")) echo $detail; ?></textarea>
@@ -93,6 +94,8 @@ if (is_array($load_all_comic)) {
         <br>
         <input class=" border-0 my-2 focus:outline-none border-solid border border-yellow-400 w-full  h-[40px] " type="text" name="author" value="<?php if (isset($author) && ($author != "")) echo $author; ?>">
         <br>
+        <span style="color: red; font-weight:bold;"><?php echo isset($_SESSION['trong_tg']) ? $_SESSION['trong_tg'] : "" ?></span><br>
+        <?php unset($_SESSION['trong_tg']); ?>
         <label class="font-medium">Intro</label>
         <br>
         <input class=" border-0 my-2 focus:outline-none border-solid border border-yellow-400 w-full  h-[40px] " type="text" name="intro" value="<?php if (isset($intro) && ($intro != "")) echo $intro; ?>">
@@ -141,8 +144,6 @@ if (is_array($load_all_comic)) {
 
         </div>
 
-
-
         <!--Svip-->
         <label class="font-medium">Truyện</label><br>
         <?php
@@ -161,11 +162,17 @@ if (is_array($load_all_comic)) {
             <label>Loại Svip</label><br>
             <input placeholder="Nhập giá truyện" class="rounded-md border-0 my-2 focus:outline-none border-solid border-2 border-yellow-400 w-full " type="text" placeholder="price" name="price_comic" value="<?= $price ?>" />
             <span class="font-medium text-red-500">
-            <?php if (isset($_SESSION['tien_nho'])) {
-                echo $_SESSION['tien_nho'];
-            } ?></span>
+                <?php if (isset($_SESSION['tien_nho'])) {
+                    echo $_SESSION['tien_nho'];
+                }
+                if (isset($_SESSION['nhap_chu'])) {
+                    echo $_SESSION['nhap_chu'];
+                }
+                ?></span>
         </p>
-        <?php unset($_SESSION['tien_nho']); ?>
+        <?php unset($_SESSION['tien_nho']);
+        unset($_SESSION['nhap_chu']);
+        ?>
         <div class="clear"></div>
         <button style="margin-top: 10px;" class="bg-orange-400 hover:bg-blue-500  hover:text-orange-400 font-medium text-white p-2 px-4  border-solid border border-yellow-400" name="btn-update">Cập nhật</a></button>
         <button class="bg-orange-400 hover:bg-blue-500  hover:text-orange-400 font-medium text-white p-2 px-4  border-solid border border-yellow-400"><a class="text-white" href="index.php?act=list_truyen">Danh sách</a></button>

@@ -121,6 +121,8 @@ if (isset($_GET['act'])) {
                 $all_comment = load_all_comment($id_category);
                 $all_love = load_all_love($id_category);
                 $all_his = load_all_history($id_category);
+                $all_not_chapter = load_all_comic_not_chapter($id_category);
+                $all_loai_not_images_chapter = load_all_comic_not_images($id_category);
 
                 if ($all_his) {
                     foreach ($all_his as $value) {
@@ -148,12 +150,22 @@ if (isset($_GET['act'])) {
                         extract($value);
                         delete_comic_img($id_chapter);
                     }
-                    foreach ($all as $value) {
+                }
+
+                if ($all_loai_not_images_chapter) {
+                    foreach ($all_loai_not_images_chapter as $value) {
                         extract($value);
                         delete_comic_chapter($id_comic);
                     }
-                    delete_fk_comic($id_category);
                 }
+
+                if ($all_not_chapter) {
+                    foreach ($all_not_chapter as $value) {
+                        extract($value);
+                        delete_comic($id_not_chapter);
+                    }
+                }
+                delete_fk_comic($id_category);
                 delete_loai($id_category);
                 header("location: index.php?act=list_loai");
                 // $list_all_loai = load_all_loai();
@@ -239,9 +251,7 @@ if (isset($_GET['act'])) {
             }
             $all_user = all_user();
             $role = load_all_roll();
-            // echo '<pre>';
-            // print_r($all_user);
-            // die;
+
             include_once './user/users.php';
             break;
             //search user
@@ -265,6 +275,29 @@ if (isset($_GET['act'])) {
             }
             if (isset($_GET['id'])) {
                 $id = $_GET['id'];
+                $all_chapter = all_chapter_poster($id);
+                $all_images = all_images_poster($id);
+
+                delete_user_love($id);
+                delete_user_cmt($id);
+                delete_user_his($id);
+                delete_user_thong_bao($id);
+                delete_user_bill($id);
+
+                if ($all_images) {
+                    foreach ($all_images as $value) {
+                        delete_images_poster($value['id_chapter']);
+                    }
+                }
+
+                if ($all_chapter) {
+                    foreach ($all_chapter as $value) {
+                        delete_chapter_poster($value['id']);
+                    }
+                }
+
+                delete_comic_user($id);
+
                 delete_user($id);
                 $all_user = all_user();
                 include_once './user/users.php';
@@ -432,6 +465,19 @@ if (isset($_GET['act'])) {
             $comic_select_all_bystatus_3 = comic_select_all_bystatus_3();
             include_once "../admin/agree/waitagree.php";
             break;
+        case 'search_wait':
+            if (isset($_POST['btn_search'])) {
+                $key = $_POST['key_search'];
+                $category_id = $_POST['category_id'];
+            } else {
+                $key = '';
+                $category_id = 0;
+                $comic_select_all_bystatus_3 = comic_select_all_bystatus_3();
+            }
+            $list_all_loai = load_all_loai();
+            $comic_select_all_bystatus_3 = comic_select_all_bystatus_3_search($key, $category_id);
+            include_once "../admin/agree/waitagree.php";
+            break;
         case 'again':
             if (isset($_GET['id'])) {
                 $id = $_GET['id'];
@@ -447,10 +493,10 @@ if (isset($_GET['act'])) {
                 $all_name_comic = comic_select_all_name();
                 $flag = true;
                 $date = date('m/d/Y h:i:s a', time());
-                $namee = $_POST['name_comic'];
+                $namee = trim($_POST['name_comic']);
                 $length2 = strlen($namee);
                 $detail = $_POST['detail'];
-                $author = $_POST['author'];
+                $author = trim($_POST['author']);
                 $intro = $_POST['intro'];
                 $view = 0;
                 $like = 0;
@@ -459,13 +505,22 @@ if (isset($_GET['act'])) {
                 $noi_dung = $_POST['noi_dung'];
                 $allowUpload = true;
 
+                if($author == ""){
+                    $trong_tg = 'Không được để trống tác giả';
+                    $allowUpload = false;
+                }
+
                 if ($_POST['vip'] == 0) {
                     $price_comic = 0;
                     $vip = 0;
                 } else {
                     $price_comic = $_POST['price_comic'];
-                    if($price_comic < 0){
+                    if ($price_comic < 0) {
                         $tien_nho_hon_0 = 'Giá tiền phải là dương!';
+                        $allowUpload = false;
+                    }
+                    if(!nhap_so($price_comic)){
+                        $sai_dinh_dang = 'Không được nhập chữ!';
                         $allowUpload = false;
                     }
                     $vip = 1;
@@ -521,7 +576,7 @@ if (isset($_GET['act'])) {
 
                     //kiểm tra kiêu file không làm trong định dạng cho phép
                     if (!in_array($imageFileType, $allowtype)) {
-                        $loi_dinh_dang = "Không được upload những ảnh có định dạng ipg, jpeg";
+                        $loi_dinh_dang = "Chỉ được upload những ảnh có định dạng ipg, jpeg";
                         $allowUpload = false;
                     }
 
@@ -567,7 +622,7 @@ if (isset($_GET['act'])) {
 
                     //kiểm tra kiêu file không làm trong định dạng cho phép
                     if (!in_array($imageFileType, $allowtype)) {
-                        $loi_dinh_dang_f = "Không được upload những ảnh có định dạng ipg, jpeg";
+                        $loi_dinh_dang_f = "Chỉ được upload những ảnh có định dạng ipg, jpeg";
                         $allowUpload = false;
                     }
                 }
@@ -597,7 +652,7 @@ if (isset($_GET['act'])) {
 
                 if (isset($_POST['btnAdd'])) {
                     $number_chapter = $_POST['number_chapter'];
-                    $noi_dung = $_POST['noi_dung'];
+                    $noi_dung = trim($_POST['noi_dung']);
                     $allowUpload = true;
                     if ($noi_dung == "") {
                         $noi_dung_trong = 'Không được để trống nội dung tập';
@@ -638,7 +693,7 @@ if (isset($_GET['act'])) {
 
                         //kiểm tra kiêu file không làm trong định dạng cho phép
                         if (!in_array($imageFileType, $allowtype)) {
-                            $loi_dinh_dang_f = "Không được upload những ảnh có định dạng ipg, jpeg";
+                            $loi_dinh_dang_f = "Chỉ được upload những ảnh có định dạng ipg, jpeg";
                             $allowUpload = false;
                         }
                     }
@@ -669,7 +724,7 @@ if (isset($_GET['act'])) {
                 delete_img_history($id);
                 delete_img_love($id);
                 delete_img_comment($id);
-                foreach($id_chapter as $value){
+                foreach ($id_chapter as $value) {
                     extract($value);
                     delete_comic_img($id_chapter);
                 }
@@ -699,7 +754,7 @@ if (isset($_GET['act'])) {
                 $number_chapter = $_GET['number_chapter'];
                 $count = count_chapter_delete($id);
                 delete_comic_img($id_chapter);
-                $limit = select_limit_chapter($number_chapter, $id,$count);
+                $limit = select_limit_chapter($number_chapter, $id, $count);
                 foreach ($limit as $value) {
                     extract($value);
                     tru_chapter($value['number_chapter'], $id);
@@ -718,7 +773,7 @@ if (isset($_GET['act'])) {
                 $noi_dung_id = load_one_noi_dung_chapter($id, $id_chapter);
 
                 if (isset($_POST['btn-update'])) {
-                    $noi_dung = $_POST['noi_dung'];
+                    $noi_dung = trim($_POST['noi_dung']);
                     $allowUpload = true;
 
                     if ($_FILES["file"]["name"][0] == "") {
@@ -755,7 +810,7 @@ if (isset($_GET['act'])) {
 
                         //kiểm tra kiêu file không làm trong định dạng cho phép
                         if (!in_array($imageFileType, $allowtype)) {
-                            $loi_dinh_dang_f = "Không được upload những ảnh có định dạng ipg, jpeg";
+                            $loi_dinh_dang_f = "Chỉ được upload những ảnh có định dạng ipg, jpeg";
                             $allowUpload = false;
                         }
                     }
@@ -784,9 +839,9 @@ if (isset($_GET['act'])) {
             if (isset($_POST['btn-update'])) {
                 $date = date('m/d/Y h:i:s a', time());
                 $id = $_POST['id'];
-                $name = $_POST['name'];
+                $name = trim($_POST['name']);
                 $detail = $_POST['detail'];
-                $author = $_POST['author'];
+                $author = trim($_POST['author']);
                 $intro = $_POST['intro'];
                 $category_id = $_POST['category_id'];
                 $name_cu = comic_select_one($id)['name'];
@@ -794,13 +849,22 @@ if (isset($_GET['act'])) {
 
                 $allowUpload = true;
 
+                if($author == ""){
+                    $_SESSION['trong_tg'] = "Không được để trống tên tác giả!";
+                    $allowUpload = false;
+                }
+
                 if ($_POST['vip'] == 0) {
                     $price_comic = 0;
                     $vip = 0;
                 } else {
                     $price_comic = $_POST['price_comic'];
-                    if($price_comic < 0){
+                    if ($price_comic < 0) {
                         $_SESSION['tien_nho'] = 'Giá tiền phải là dương!';
+                        $allowUpload = false;
+                    }
+                    if(!nhap_so($price_comic)){
+                        $_SESSION['nhap_chu'] = 'Không được nhập chữ!';
                         $allowUpload = false;
                     }
                     $vip = 1;
@@ -842,13 +906,13 @@ if (isset($_GET['act'])) {
                     //ko là ảnh trả về false
                     $check = getimagesize($_FILES["cover_image"]["tmp_name"]);
                     if ($check == false) {
-                        $khong_phai_anh = "Đây không phải là file ảnh";
+                        $_SESSION['khong_phai_anh'] = "Đây không phải là file ảnh";
                         $allowUpload = false;
                     }
 
                     //kiểm tra kiêu file không làm trong định dạng cho phép
                     if (!in_array($imageFileType, $allowtype)) {
-                        $loi_dinh_dang = "Không được upload những ảnh có định dạng ipg, jpeg";
+                        $_SESSION['dinh_dang'] = "Chỉ được upload những ảnh có định dạng ipg, jpeg";
                         $allowUpload = false;
                     }
 
@@ -997,7 +1061,7 @@ if (isset($_GET['act'])) {
             include_once '../admin/bill/edit_bill.php';
             break;
         case 'update_bill':
-       
+
             if (isset($_POST['cap_nhat'])) {
                 $status = $_POST['status'];
                 $id = $_POST['id'];
@@ -1020,7 +1084,7 @@ if (isset($_GET['act'])) {
                     if ($price == 500000) {
                         $coin = 550000;
                     }
-                    $content = 'bạn đã được cộng ' . $coin . 'coin';
+                    $content = 'bạn đã được cộng ' . number_format($coin) . ' coin';
                     update_bill($id, $status);
                     update_coin($id_user, $coin);
                     insert_tb($id_user, $content, $date);

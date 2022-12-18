@@ -29,9 +29,6 @@ $comic_by_view = comic_by_view();
 $comic_by_date = comic_by_date(0, 18);
 $comic_svip = load_comic_svip();
 
-
-// echo '<pre>';
-// print_r($count);
 //Controller
 //Tìm kiếm
 if (isset($_SESSION['okokok'])) {
@@ -43,14 +40,15 @@ if (isset($_SESSION['dang_xuat'])) {
 
 if (isset($_POST['search'])) {
 
-    $length = strlen($_POST['textsearch']);
+    $length = trim(strlen($_POST['textsearch']));
 
     if ($length != 0) {
         $textsearch = $_POST['textsearch'];
         $all_search = search_all($textsearch);
-        include_once  'views/search.php';
-        include_once  './views/header_home_footer/footer.php';
-        die;
+        header('location:index.php?act=search_comic_all&text='.$textsearch);
+    }else{
+        $_SESSION['timkiem'] = 'bạn chưa nhập từ khóa';
+        header('location:index.php');
     }
 }
 
@@ -58,6 +56,14 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
     $act = $_GET['act'];
 
     switch ($act) {
+        //search comic client
+        case 'search_comic_all':
+            if(isset($_GET['text'])){
+                $textsearch = $_GET['text'];
+                $all_search = search_all($textsearch);
+            }
+            include_once  'views/search.php';
+            break;
             //Đọc truyện
         case 'doc_truyen':
             if (isset($_GET['id']) && $_GET['id'] > 0) {
@@ -322,22 +328,22 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
                             update_password($id, $hash_pw);
                             $mail = new PHPMailer(true);
                             try {
-                                $mail->SMTPDebug = 0;                                 
-                                $mail->isSMTP();                                    
+                                $mail->SMTPDebug = 0;
+                                $mail->isSMTP();
                                 $mail->Host = 'smtp.gmail.com';
-                                $mail->SMTPAuth = true;                 
-                                $mail->Username = 'nqv31032003@gmail.com';               
-                                $mail->Password = 'xaylurdindyluteq';                          
-                                $mail->SMTPSecure = 'tls';                        
-                                $mail->Port = 587;                                
+                                $mail->SMTPAuth = true;
+                                $mail->Username = 'nqv31032003@gmail.com';
+                                $mail->Password = 'xaylurdindyluteq';
+                                $mail->SMTPSecure = 'tls';
+                                $mail->Port = 587;
 
-                                //Recipients
+
                                 $mail->setFrom('nqv31032003@gmail.com', 'Mailer');
-                                $mail->addAddress($email, $name_user);    
+                                $mail->addAddress($email, $name_user);
 
                                 $mail->addCC('nqv31032003@gmail.com');
-                        
-                                $mail->isHTML(true);                              
+
+                                $mail->isHTML(true);
                                 $mail->Subject = 'Mật khẩu mới của bạn';
                                 $mail->Body    = 'Đây là mật khẩu mới của bạn ' . $pass_new;
 
@@ -348,8 +354,8 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
                             } catch (Exception $e) {
                                 echo 'Message could not be sent. Mailer Error: ', $mail->ErrorInfo;
                             }
-                        }else{
-                            $_SESSION['err_pw_em'] = 'Email chưa đăng ký!'; 
+                        } else {
+                            $_SESSION['err_pw_em'] = 'Email chưa đăng ký!';
                         }
                     }
                 }
@@ -360,8 +366,7 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
         case 'cap_nhat_tai_khoan':
             if ($_SESSION['auth']) {
                 $id = $_SESSION['auth']['id'];
-                $user_id = select_User_Id($id);
-
+                $user = get_one_user($id);
                 if (isset($_POST['update'])) {
                     $name = trim($_POST['name']);
                     $phone = trim($_POST['phone']);
@@ -387,8 +392,19 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
                         $err_address = "Địa chỉ không được để trống";
                     }
                     if ($flag_register) {
-                        update_user($id, $name, $phone, $address, $role);
-                        header("location: " . $_SERVER['HTTP_REFERER']);
+                        update_client($id, $name, $phone, $address);
+                        $user = get_one_user($id);
+                        $_SESSION['auth'] = [
+                            'id' => $user['id'],
+                            'email' => $user['email'],
+                            'name' => $user['name'],
+                            'role' => $user['role'],
+                            'role_name' => $user['role_name'],
+                            'coin' => $user['coin'],
+                            'phone' => $user['phone'],
+                            'address' => $user['address']
+                        ];
+                        header("location:index.php?act=cap_nhat_tai_khoan");
                     } else {
                         $thongbao = "Cập nhật người dùng thất bại ";
                     }
@@ -516,6 +532,19 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
             break;
             //Nạp coin
         case 'coin':
+            if (isset($_POST['nap_coin'])) {
+                if ($_SESSION['auth']) {
+                    if ($_POST['price'] != 0) {
+                        $price = $_POST['price'];
+                        header('location:index.php?act=chi_tiet_coin&price=' . $price);
+                    } else {
+                        $menh_gia = "Bạn chưa chọn mệnh giá";
+                    }
+                } else {
+                    $_SESSION['chua_dn'] = "Bạn cần đăng nhập để nạp coin";
+                    header('location:index.php?act=coin');
+                }
+            }
             include "views/coin.php";
             break;
         case 'del_tb':
@@ -526,23 +555,8 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
             header("location:index.php");
             break;
         case 'chi_tiet_coin':
-            if ($_SESSION['auth']) {
-                if (isset($_POST['nap_coin'])) {
-                    if ($_POST['price'] != 0) {
-                        $price = $_POST['price'];
-                        $id = $_SESSION['auth']['id'];
-                        $email = $_SESSION['auth']['email'];
-                        $name = $_SESSION['auth']['name'];
-                        $phone = $_SESSION['auth']['phone'];
-                        $address = $_SESSION['auth']['address'];
-                    } else {
-                        $_SESSION['chon_menh_gia'] = "Bạn chưa chọn mệnh giá";
-                        header('location:index.php?act=coin');
-                    }
-                }
-            } else {
-                $_SESSION['chua_dn'] = "Bạn cần đăng nhập để nạp coin";
-                header('location:index.php?act=coin');
+            if (isset($_GET['price'])) {
+                $price = $_GET['price'];
             }
             include "views/chi_tiet_coin.php";
             break;
@@ -558,12 +572,10 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
                 $phone = $_SESSION['auth']['phone'];
                 $status = 0;
                 $flag_bill = true;
-                // echo '<pre>';
-                // var_dump($_FILES["fileupload"]);
-                // die;
+
                 if ($_FILES["fileupload"]['name'] == '') {
                     $_SESSION['bill'] = 'Không tồn tại file để upload';
-                    include "views/chi_tiet_coin.php";
+                    header('location:index.php?act=chi_tiet_coin&price=' . $price);
                     break;
                 } else {
                     //đã tồn tại
@@ -585,31 +597,23 @@ if (isset($_GET['act']) && $_GET['act'] != "") {
                     if ($check == false) {
                         $_SESSION['bill'] = "Đây không phải là file ảnh";
                         $flag_bill = false;
-                        include "views/chi_tiet_coin.php";
+                        header('location:index.php?act=chi_tiet_coin&price=' . $price);
                         break;
                     } else {
                         if (!in_array($imageFileType, $allowType)) {
                             $_SESSION['bill'] = "Chỉ được upload những định dạng jpg, jpeg,png";
                             $flag_bill = false;
-                            include "views/chi_tiet_coin.php";
-                            break;
-                        }
-                        if (file_exists($target_file)) {
-                            $_SESSION['bill'] = ' file đã tồn tại trên sever không được ghi đè';
-                            $flag_bill = false;
-                            include "views/chi_tiet_coin.php";
+                            header('location:index.php?act=chi_tiet_coin&price=' . $price);
                             break;
                         }
                     }
-
-
 
                     if ($flag_bill == true) {
                         //xử lý di chuyển file tạm vào thư mục cần lưu trữ
                         $name_img = $_FILES["fileupload"]["name"];
                         // Upload file
                         move_uploaded_file($_FILES['fileupload']['tmp_name'],  $target_file);
-                        insert_bill($id_user, $name, $price, $email, $address, $phone, $status, $date, $name_img);
+                        insert_bill($id_user, $price, $status, $date, $name_img);
                         header('location:index.php?act=hoa_don');
                     }
                 }

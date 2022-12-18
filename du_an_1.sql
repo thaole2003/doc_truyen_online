@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Dec 02, 2022 at 10:06 AM
--- Server version: 10.2.40-MariaDB
--- PHP Version: 7.2.30
+-- Máy chủ: 127.0.0.1
+-- Thời gian đã tạo: Th12 15, 2022 lúc 08:08 PM
+-- Phiên bản máy phục vụ: 10.4.24-MariaDB
+-- Phiên bản PHP: 7.4.29
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,39 +18,37 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `fumpddnwhosting_duan1`
+-- Cơ sở dữ liệu: `du_an_1`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `bill`
+-- Cấu trúc bảng cho bảng `bill`
 --
 
 CREATE TABLE `bill` (
   `id` int(11) NOT NULL,
   `id_user` int(11) DEFAULT NULL,
-  `name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `price` int(11) DEFAULT NULL,
-  `email` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `address` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `phone` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `status` int(11) DEFAULT NULL,
   `date` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `images` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `bill`
+-- Đang đổ dữ liệu cho bảng `bill`
 --
 
-INSERT INTO `bill` (`id`, `id_user`, `name`, `price`, `email`, `address`, `phone`, `status`, `date`, `images`) VALUES
-(12, 11, 'abc', 50000, 'a@gmail.com', 'Hà Nội', '0868985927', 1, '12/02/2022 01:18:36 pm', 'su-do-vo-han-va-12-chien-co_1596767172.jpg');
+INSERT INTO `bill` (`id`, `id_user`, `price`, `status`, `date`, `images`) VALUES
+(25, 11, 20000, 0, '12/07/2022 12:42:11 pm', 'slider_1559211185.jpg'),
+(26, 11, 50000, 1, '12/07/2022 10:58:38 pm', '2.jpg'),
+(30, 11, 20000, 1, '12/13/2022 07:23:13 pm', 'tu-hong-nguyet-khai-thuy_1660834858.jpg');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `category`
+-- Cấu trúc bảng cho bảng `category`
 --
 
 CREATE TABLE `category` (
@@ -59,7 +57,7 @@ CREATE TABLE `category` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `category`
+-- Đang đổ dữ liệu cho bảng `category`
 --
 
 INSERT INTO `category` (`id`, `name`) VALUES
@@ -75,7 +73,7 @@ INSERT INTO `category` (`id`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `chapter`
+-- Cấu trúc bảng cho bảng `chapter`
 --
 
 CREATE TABLE `chapter` (
@@ -87,7 +85,7 @@ CREATE TABLE `chapter` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `chapter`
+-- Đang đổ dữ liệu cho bảng `chapter`
 --
 
 INSERT INTO `chapter` (`id`, `number_chapter`, `noi_dung`, `date`, `id_comic`) VALUES
@@ -106,8 +104,6 @@ INSERT INTO `chapter` (`id`, `number_chapter`, `noi_dung`, `date`, `id_comic`) V
 (13, 1, 'Đội quân hùng mạnh', '12/02/2022 07:08:37 am', 217),
 (14, 2, 'Thanh gươm đẫm máu', '12/02/2022 07:09:07 am', 217),
 (15, 3, 'Cuộc chạy đua', '12/02/2022 07:09:22 am', 217),
-(36, 1, 'qưe', '12/02/2022 03:14:40 pm', 235),
-(37, 1, 'qưe', '12/02/2022 03:18:59 pm', 236),
 (38, 1, 'Ngự lâm quân', '12/02/2022 03:44:55 pm', 237),
 (39, 2, 'Trên bầu trời', '12/02/2022 03:45:19 pm', 237),
 (40, 3, 'Núi cao', '12/02/2022 03:45:35 pm', 237),
@@ -202,16 +198,12 @@ INSERT INTO `chapter` (`id`, `number_chapter`, `noi_dung`, `date`, `id_comic`) V
 (129, 2, 'Đánh nhau bất bại', '12/02/2022 04:49:02 pm', 267),
 (130, 3, 'Nội vụ xung đột', '12/02/2022 04:49:19 pm', 267),
 (131, 1, 'Tranh luận!', '12/02/2022 04:50:44 pm', 268),
-(132, 2, 'Lời nói dối', '12/02/2022 04:50:58 pm', 268),
-(133, 3, 'Sự thật khó ngờ', '12/02/2022 04:51:11 pm', 268),
-(134, 1, 'Chạm mặt quái vật', '12/02/2022 04:52:47 pm', 269),
-(135, 2, 'Chiến đâu không ngừng', '12/02/2022 04:53:11 pm', 269),
-(136, 3, 'Chốt hạ!', '12/02/2022 04:53:24 pm', 269);
+(133, 2, 'Sự thật khó ngờ', '12/02/2022 04:51:11 pm', 268);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `comic`
+-- Cấu trúc bảng cho bảng `comic`
 --
 
 CREATE TABLE `comic` (
@@ -232,55 +224,52 @@ CREATE TABLE `comic` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `comic`
+-- Đang đổ dữ liệu cho bảng `comic`
 --
 
 INSERT INTO `comic` (`id`, `name`, `cover_image`, `detail`, `author`, `date`, `intro`, `view`, `like_comic`, `category_id`, `status`, `poster`, `vip`, `price`) VALUES
-(213, 'Học Viện Anh Hùng', 'main1.jpg', 'Vào tương lai, lúc mà con người với những sức mạnh siêu nhiên là điều thường thấy quanh thế giới. Đây là câu chuyện về Izuku Midoriya, từ một kẻ bất tài trở thành một siêu anh hùng. Tất cả ta cần là mơ ước.', 'Hakimmi', '12/02/2022 06:52:51 am', 'Truyện thịnh hành', 5, 1246, 139, 2, 11, 0, 0),
-(214, 'One Piece', 'slider_1559211185.jpg', 'One Piece là câu truyện kể về Luffy và các thuyền viên của mình. Khi còn nhỏ, Luffy ước mơ trở thành Vua Hải Tặc. Cuộc sống của cậu bé thay đổi khi cậu vô tình có được sức mạnh có thể co dãn như cao su, nhưng đổi lại, cậu không bao giờ có thể bơi được nữa. Giờ đây, Luffy cùng những người bạn hải tặc của mình ra khơi tìm kiếm kho báu One Piece, kho báu vĩ đại nhất trên thế giới. Trong One Piece, mỗi nhân vật trong đều mang một nét cá tính đặc sắc kết hợp cùng các tình huống kịch tính, lối dẫn truyện hấp dẫn chứa đầy các bước ngoặt bất ngờ và cũng vô cùng hài hước đã biến One Piece trở thành một trong những bộ truyện nổi tiếng nhất không thể bỏ qua. Hãy đọc One Piece để hòa mình vào một thế giới của những hải tặc rộng lớn, đầy màu sắc, sống động và thú vị, cùng đắm chìm với những nhân vật yêu tự do, trên hành trình đi tìm ước mơ của mình.', 'Eiichiro Oda', '12/02/2022 06:54:45 am', 'Truyện hot', 4, 652, 139, 2, 11, 0, 0),
-(215, 'Hội Pháp Sư Nhiệm Vụ Trăm Năm', 'slider_1561609693.jpg', 'Tuyện tiếp nối của Fairy Tail, khi nhóm Natsu đi làm nhiệm vụ trăm năm.', 'Kabuchaki', '12/02/2022 07:02:39 am', 'Truyện hấp dẫn', 8, 654, 141, 2, 11, 0, 0),
+(213, 'Học Viện Anh Hùng', 'main1.jpg', 'Vào tương lai, lúc mà con người với những sức mạnh siêu nhiên là điều thường thấy quanh thế giới. Đây là câu chuyện về Izuku Midoriya, từ một kẻ bất tài trở thành một siêu anh hùng. Tất cả ta cần là mơ ước.', 'Hakimmi', '12/02/2022 06:52:51 am', 'Truyện thịnh hành', 6, 1246, 139, 2, 11, 0, 0),
+(214, 'One Piece', 'slider_1559211185.jpg', 'One Piece là câu truyện kể về Luffy và các thuyền viên của mình. Khi còn nhỏ, Luffy ước mơ trở thành Vua Hải Tặc. Cuộc sống của cậu bé thay đổi khi cậu vô tình có được sức mạnh có thể co dãn như cao su, nhưng đổi lại, cậu không bao giờ có thể bơi được nữa. Giờ đây, Luffy cùng những người bạn hải tặc của mình ra khơi tìm kiếm kho báu One Piece, kho báu vĩ đại nhất trên thế giới. Trong One Piece, mỗi nhân vật trong đều mang một nét cá tính đặc sắc kết hợp cùng các tình huống kịch tính, lối dẫn truyện hấp dẫn chứa đầy các bước ngoặt bất ngờ và cũng vô cùng hài hước đã biến One Piece trở thành một trong những bộ truyện nổi tiếng nhất không thể bỏ qua. Hãy đọc One Piece để hòa mình vào một thế giới của những hải tặc rộng lớn, đầy màu sắc, sống động và thú vị, cùng đắm chìm với những nhân vật yêu tự do, trên hành trình đi tìm ước mơ của mình.', 'Eiichiro Oda', '12/02/2022 06:54:45 am', 'Truyện hot', 6, 651, 139, 2, 11, 0, 0),
+(215, 'Hội Pháp Sư Nhiệm Vụ Trăm Năm', 'slider_1561609693.jpg', 'Tuyện tiếp nối của Fairy Tail, khi nhóm Natsu đi làm nhiệm vụ trăm năm.', 'Kabuchaki', '12/02/2022 07:02:39 am', 'Truyện hấp dẫn', 9, 655, 141, 2, 11, 0, 0),
 (216, 'Thanh Gươm Diệt Quỷ', 'slider_1559213537.jpg', 'Kimetsu no Yaiba – Tanjirou là con cả của gia đình vừa mất cha. Một ngày nọ, Tanjirou đến thăm thị trấn khác để bán than, khi đêm về cậu ở nghỉ tại nhà người khác thay vì về nhà vì lời đồn thổi về ác quỷ luôn rình mò gần núi vào buổi tối. Khi cậu về nhà vào ngày hôm sau, bị kịch đang đợi chờ cậu…', 'Gotouge Koyoharu', '12/02/2022 07:06:33 am', 'Chém nhau, bay nhảy', 0, 658, 140, 2, 11, 0, 0),
-(217, 'Ánh Sáng & Bóng Tối', 'slider_1587986979.jpg', 'Bộ truyện tranh đầu tiên của tựa game Liên Quân Mobile chính thức ra mắt\r\nCâu chuyện lấy bối cảnh ở một vùng đất giả tưởng mang tên Athanor, nơi đang bị giày xéo bởi chiến tranh giữa các chủng tộc, giữa thần linh và ác ma.\r\nCùng theo dõi bước chân của hai cô nàng lính đánh thuê Butterfly và Violet trong quá trình truy đuổi một đám pháp sư hắc ám, đã vô tình phát hiện ra một âm mưu vô cùng to lớn như thế nào nhé!', 'Tencent, Garena', '12/02/2022 07:08:37 am', 'Game mô phỏng', 4, 682, 144, 2, 11, 0, 0),
-(235, 'Mãi mãi FA', 'than-gui-nang-bach-tuyet_1669254812.jpg', 'qưeqw', 'eqw', '12/02/2022 03:14:40 pm', 'eqw', 0, 0, 144, 3, 19, 0, 0),
-(236, 'qưe', 'than-gui-nang-bach-tuyet_1669254812.jpg', 'qưeqw', 'qưeqwe', '12/02/2022 03:18:59 pm', 'qưeqe', 0, 0, 145, 1, 20, 0, 0),
+(217, 'Ánh Sáng & Bóng Tối', 'slider_1587986979.jpg', 'Bộ truyện tranh đầu tiên của tựa game Liên Quân Mobile chính thức ra mắt\r\nCâu chuyện lấy bối cảnh ở một vùng đất giả tưởng mang tên Athanor, nơi đang bị giày xéo bởi chiến tranh giữa các chủng tộc, giữa thần linh và ác ma.\r\nCùng theo dõi bước chân của hai cô nàng lính đánh thuê Butterfly và Violet trong quá trình truy đuổi một đám pháp sư hắc ám, đã vô tình phát hiện ra một âm mưu vô cùng to lớn như thế nào nhé!', 'Tencent, Garena', '12/02/2022 07:08:37 am', 'Game mô phỏng', 36, 683, 144, 2, 11, 0, 0),
 (237, 'Ngự Linh Thế Giới', 'su-do-vo-han-va-12-chien-co_1596767172.jpg', 'Một họa sĩ truyện tranh xuyên qua dị giới\r\nĐến lúc đó, hắn nhận ra 1 vấn đề', 'Inakema', '12/02/2022 03:44:55 pm', 'Truyện hay', 0, 0, 143, 2, 11, 0, 0),
 (238, 'Võ Luyện Đỉnh Phong', 'chien-than-tu-sat-hoi-quy_1624846133.jpg', 'Võ đạo đỉnh phong, là cô độc, là tịch mịch, là dài đằng đẵng cầu tác, là cao xử bất thắng hàn\r\n\r\nPhát triển trong nghịch cảnh, cầu sinh nơi tuyệt địa, bất khuất không buông tha, mới có thể có thể phá võ chi cực đạo.\r\n\r\nLăng Tiêu các thí luyện đệ tử kiêm quét rác gã sai vặt Dương Khai ngẫu lấy được một bản vô tự hắc thư, từ nay về sau đạp vào dài đằng đẵng võ đạo.', 'BaSuKiNa', '12/02/2022 03:46:49 pm', 'Truyện nổi tiếng', 0, 0, 142, 2, 11, 1, 20000),
 (239, 'Toàn Chức Pháp Sư', 'tu-hong-nguyet-khai-thuy_1660834858.jpg', 'Tỉnh lại sau giấc ngủ, thế giới đại biến. Quen thuộc cao trung truyền thụ chính là phép thuật, nói cho mọi người muốn trở thành một tên xuất sắc Ma Pháp Sư. Ở lại đô thị ở ngoài du đãng tập kích nhân loại ma vật yêu thú, mắt nhìn chằm chằm. Tôn trọng khoa học thế giới đã biến thành tôn trọng phép thuật, một mực có như nhau lấy học tra đối xử giáo viên của chính mình, như nhau ánh mắt dị dạng bạn học, như nhau xã hội tầng dưới chót giãy dụa ba ba, như nhau thuần mỹ nhưng không thể bước đi không phải huyết thống muội muội…\r\n\r\nBất quá, Mạc Phàm phát hiện tuyệt đại đa số người đều chỉ có thể chủ tu nhất hệ phép thuật, chính mình nhưng là toàn hệ toàn năng pháp sư!', 'Jacikami', '12/02/2022 03:49:20 pm', 'King kong bay nhay', 0, 0, 139, 2, 11, 1, 16000),
 (240, 'Dịch Vụ Thuê Bạn Gái', 'giet-quai-de-thang-cap_1669350069.jpg', 'Quéo quèo, biết mô tả thế nào đây? Một thằng Zin tên là Kazuya 19 năm mới có bồ không bao lâu thì bị đá, thế là cậu ta phải sử dụng dịch vụ Hẹn hò Thuê, cứ trả xiền là ngày đó bạn sẽ có bạn gái ngay! Cậu ta đã thuê Mizuhara làm bạn gái mình, cô nàng thì cứ công việc (méo có yêu thương gì đâu) mà thả thính, còn chàng ta thì đớp thính vô tội vạ, cho đến khi… Đến khi Kazuya bớt sống ảo, cậu ta ngưng đớp thính và tự sẽ kiếm bạn gái thật cho mình thì mới hớ ra Mizuhara học cùng trường với mình, câu chuyện tình dở khóc dở cười này sẽ ra sao đây? Các bạn đón xem nhé!', 'Miyajima Reiji', '12/02/2022 03:52:32 pm', 'Truyện lãng mạn', 43, 0, 143, 2, 11, 0, 0),
-(241, ' Lãnh Chúa Bóng Tối', 'mot-so-mau-truyen-sieu-cung-cua-ngai-kojorin_1669091332.jpg', 'Truyện tranh Lãnh Chúa Bóng Tối được cập nhật nhanh và đầy đủ nhất tại TruyenSvip. Bạn đọc đừng quên để lại bình luận và chia sẻ, ủng hộ TruyenSvip ra các chương mới nhất của truyện Lãnh Chúa Bóng Tối.', 'Minakazu', '12/02/2022 03:54:40 pm', 'Truyện hay', 600, 0, 142, 2, 11, 0, 0),
-(242, 'Sự Trở Lại Của Người Chơi Mạnh Nhất', 'ta-la-dai-than-tien_1540132115.jpg', 'Khi bạn thành công ở mọi thứ bạn cố gắng, bạn không còn cách nào khác ngoài tìm kiếm thử thách ở nơi khác, như trong một trò chơi. Bằng cách sử dụng các công việc rác mà không ai chú ý đến, với thái độ đúng đắn, bạn buộc phải hoàn thành mục tiêu của mình! Thậm chí thành công ở những nhiệm vụ bất khả thi nhất, nhân vật chính đặt cược mọi thử anh ta có. Với kĩ năng của mình, tôi sẽ đánh bại trò chơi này !', 'BaChaKiZu', '12/02/2022 03:57:01 pm', 'Truyện thủ lĩnh', 745, 0, 144, 2, 11, 1, 21000),
+(241, ' Lãnh Chúa Bóng Tối', 'mot-so-mau-truyen-sieu-cung-cua-ngai-kojorin_1669091332.jpg', 'Truyện tranh Lãnh Chúa Bóng Tối được cập nhật nhanh và đầy đủ nhất tại TruyenSvip. Bạn đọc đừng quên để lại bình luận và chia sẻ, ủng hộ TruyenSvip ra các chương mới nhất của truyện Lãnh Chúa Bóng Tối.', 'Minakazu', '12/02/2022 03:54:40 pm', 'Truyện hay', 613, 1, 142, 2, 11, 0, 0),
+(242, 'Sự Trở Lại Của Người Chơi Mạnh Nhất', 'ta-la-dai-than-tien_1540132115.jpg', 'Khi bạn thành công ở mọi thứ bạn cố gắng, bạn không còn cách nào khác ngoài tìm kiếm thử thách ở nơi khác, như trong một trò chơi. Bằng cách sử dụng các công việc rác mà không ai chú ý đến, với thái độ đúng đắn, bạn buộc phải hoàn thành mục tiêu của mình! Thậm chí thành công ở những nhiệm vụ bất khả thi nhất, nhân vật chính đặt cược mọi thử anh ta có. Với kĩ năng của mình, tôi sẽ đánh bại trò chơi này !', 'BaChaKiZu', '12/02/2022 03:57:01 pm', 'Truyện thủ lĩnh', 746, 0, 144, 2, 11, 1, 21000),
 (243, 'Ranker Mộng Du', 'nguyen-ton_1513349962.jpg', 'Sau khi ngủ một lúc và thức dậy, tôi có một món đồ? Hãy chú ý đến câu chuyện về Đẳng cấp Thần, hậu duệ của Thananos, Hyunsung không thể ngăn cản.', 'MaLiBaCha', '12/02/2022 04:00:57 pm', 'Truyện hấp dẫn', 0, 0, 156, 2, 11, 1, 15000),
 (244, 'Thiên Ma Phi Thăng Truyện', 'sieu-than-che-tap-su_1628700281.jpg', 'Bị cấp trên phản bội, trọng sinh nhờ hệ thống, sau khi trọng sinh thì đua top server theo con đường tà ác để trả thù. CUỐN KHỎI BÀN!!!!', 'Hamakiza', '12/02/2022 04:02:34 pm', 'Truyện hành động hay', 252, 0, 141, 2, 11, 1, 16000),
 (245, 'Ma Pháp Sư Tại Trường Học Pháp Thuật', 'toi-den-tu-dia-nguc_1668049604.jpg', 'Studio bê ca mếch Bình Dương', 'Bakimane', '12/02/2022 04:04:39 pm', 'Truyện hành động', 523, 0, 141, 2, 11, 1, 31000),
-(246, 'Ngã Lão Ma Thần', 'khi-do-chung-ta-con-tre_1664210417.jpg', 'Một trong những Ma thần mạnh nhất lịch sử võ lâm xuất hiện, là kỳ tài võ học kinh người, nhưng khởi nguồn lại là do ... thằng chút chít cách đó cả ngàn năm bay về can thiệp, câu chuyện hư cmn cấu này rồi sẽ đi đâu về đâu', 'Hikamaru', '12/02/2022 04:08:58 pm', 'Truyện kịch tính', 345, 0, 143, 2, 11, 0, 0),
+(246, 'Ngã Lão Ma Thần', 'khi-do-chung-ta-con-tre_1664210417.jpg', 'Một trong những Ma thần mạnh nhất lịch sử võ lâm xuất hiện, là kỳ tài võ học kinh người, nhưng khởi nguồn lại là do ... thằng chút chít cách đó cả ngàn năm bay về can thiệp, câu chuyện hư cmn cấu này rồi sẽ đi đâu về đâu', 'Hikamaru', '12/02/2022 04:08:58 pm', 'Truyện kịch tính', 346, 0, 143, 2, 11, 0, 0),
 (247, ' Dũng Giả Được Chuyển Sinh', 'anti-gravity-boy_1445477907.jpg', 'August, một dũng giả đã thách thức Quỷ Vương, toàn bộ đồng đội và thế giới của hắn đã bị Quỷ vương hủy diệt. August sau khi chết được chuyển sinh vào một cậu nhóc mẫu giáo ở Trái Đất ,con đường tập hợp những người đồng đội cũ để bảo vệ thế giới một lần nữa bắt đầu!! (Hikkiteam)', 'Jikimanu', '12/02/2022 04:10:54 pm', 'Truyện hay', 0, 0, 144, 2, 11, 0, 0),
 (248, 'Bách Luyện Thành Thần', 'than-gui-nang-bach-tuyet_1669254812.jpg', 'Cảnh giới: Luyện nhục cảnh, Luyện cốt cảnh, Luyện tạng cảnh.... La Chính vì gái mà bị đày làm nô bộc. La Bái Nhiên tham vọng đầy mình La Chính lại vì gái mà đâm đầu tu luyện La Gia trong phủ nước sôi lửa bỏng, tranh giành kịch liệt...', 'LaHanKi', '12/02/2022 04:12:28 pm', 'Truyện lãng mạn', 334, 0, 156, 2, 11, 1, 20000),
 (249, 'Thần Hồn Võ Đế', 'im-a-shy.jpg', 'Truyện tranh Thần Hồn Võ Đế được cập nhật nhanh và đầy đủ nhất tại TruyenSvip. Bạn đọc đừng quên để lại bình luận và chia sẻ, ủng hộ TruyenSvip ra các chương mới nhất của truyện Thần Hồn Võ Đế.', 'AraKima', '12/02/2022 04:14:27 pm', 'Truyện thần kiếm', 0, 0, 141, 2, 11, 0, 0),
-(250, ' Ta Muốn An Tĩnh, Hệ Thống Lại Bắt Ta Tìm Chết', 'vua-bong-chay_1658988357.jpg', 'Leng keng! Hoan nghênh sử dụng toàn trí năng tu chân hệ thống! Trọng yếu nhắc nhở, hệ thống trong lúc tu luyện, ngài sẽ mất đi quyền khống chế thân thể...... Đạt được trí năng tu luyện hệ thống sau, Bùi lăng nghĩ đến âm thầm phi tốc trưởng thành, cẩu thành vương giả. Thẳng đến một ngày nào đó...... Leng keng! Hệ thống kiểm trắc tu luyện thiếu khuyết đạo lữ, hệ thống ngay tại vì ngài tìm kiếm đạo lữ...... Thế là, Bùi lăng trơ mắt nhìn mình đạp ra Thánh nữ môn......', 'Nakasu', '12/02/2022 04:16:32 pm', 'Truyện cổ nhân', 536, 0, 144, 2, 11, 1, 12000),
+(250, ' Ta Muốn An Tĩnh, Hệ Thống Lại Bắt Ta Tìm Chết', 'vua-bong-chay_1658988357.jpg', 'Leng keng! Hoan nghênh sử dụng toàn trí năng tu chân hệ thống! Trọng yếu nhắc nhở, hệ thống trong lúc tu luyện, ngài sẽ mất đi quyền khống chế thân thể...... Đạt được trí năng tu luyện hệ thống sau, Bùi lăng nghĩ đến âm thầm phi tốc trưởng thành, cẩu thành vương giả. Thẳng đến một ngày nào đó...... Leng keng! Hệ thống kiểm trắc tu luyện thiếu khuyết đạo lữ, hệ thống ngay tại vì ngài tìm kiếm đạo lữ...... Thế là, Bùi lăng trơ mắt nhìn mình đạp ra Thánh nữ môn......', 'Nakasu', '12/02/2022 04:16:32 pm', 'Truyện cổ nhân', 538, 0, 144, 2, 11, 1, 12000),
 (251, 'Tuyệt Thế Võ Thần', 'captain-tsubasa.jpg', 'Cửu Tiêu đại lục, tông môn san sát, võ đạo làm đầu, người yếu tầm thường, bị người bắt nạt, cường giả giận dữ, máu chảy thành sông.Võ đạo hoàng giả, càng có thể quan sát thiên địa, ngạo cười non sông, động thì lại ngày kinh thạch phá, phơi thây trăm vạn.Một đời cường nhân Lâm Phong, nghịch thiên xuất thế, đến kinh thế truyền thừa, tu võ đạo, đạp Cửu Tiêu, phá thiên địa, ngạo thương khung!', 'Gamani', '12/02/2022 04:18:11 pm', 'Bóng đã', 81, 0, 139, 2, 11, 0, 0),
-(252, 'Ta Có Một Sơn Trại', 'capcom-vs-snk_1593772122.jpg', 'Truyện tranh Ta Có Một Sơn Trại được cập nhật nhanh và đầy đủ nhất tại TruyenSvip. Bạn đọc đừng quên để lại bình luận và chia sẻ, ủng hộ TruyenSvip ra các chương mới nhất của truyện Ta Có Một Sơn Trại.', 'Yamata', '12/02/2022 04:21:10 pm', 'Truyện hot', 432, 0, 141, 2, 11, 1, 18000),
+(252, 'Ta Có Một Sơn Trại', 'capcom-vs-snk_1593772122.jpg', 'Truyện tranh Ta Có Một Sơn Trại được cập nhật nhanh và đầy đủ nhất tại TruyenSvip. Bạn đọc đừng quên để lại bình luận và chia sẻ, ủng hộ TruyenSvip ra các chương mới nhất của truyện Ta Có Một Sơn Trại.', 'Yamata', '12/02/2022 04:21:10 pm', 'Truyện hot', 435, 0, 141, 2, 11, 1, 18000),
 (253, 'Lăng Thiên Thần Đế', 'me-and-roboco_1668755232.jpg', 'Truyện tranh Lăng Thiên Thần Đế được cập nhật nhanh và đầy đủ nhất. Bạn đọc đừng quên để lại bình luận và chia sẻ, ủng hộ ra các chương mới nhất của truyện Lăng Thiên Thần Đế.', 'Tamaki', '12/02/2022 04:23:10 pm', 'Truyện hài', 342, 0, 142, 2, 11, 0, 0),
-(254, 'Lâm Binh Đấu Giả', 'hoa-long-vainqueur_1666167689.jpg', 'Truyện tranh Lâm Binh Đấu Giả được cập nhật nhanh và đầy đủ nhất. Bạn đọc đừng quên để lại bình luận và chia sẻ, ủng hộ ra các chương mới nhất của truyện Lâm Binh Đấu Giả.\r\n', 'Fakumi', '12/02/2022 04:25:02 pm', 'Võ thuật', 53, 0, 139, 2, 11, 1, 5000),
+(254, 'Lâm Binh Đấu Giả', 'hoa-long-vainqueur_1666167689.jpg', 'Truyện tranh Lâm Binh Đấu Giả được cập nhật nhanh và đầy đủ nhất. Bạn đọc đừng quên để lại bình luận và chia sẻ, ủng hộ ra các chương mới nhất của truyện Lâm Binh Đấu Giả.\r\n', 'Fakumi', '12/02/2022 04:25:02 pm', 'Võ thuật', 57, 0, 139, 2, 11, 1, 5000),
 (255, 'Chuyển Sinh Thành Tiêu Sư', 'chien-than-bat-tu_1667659075.jpg', 'Truyện tranh Chuyển Sinh Thành Tiêu Sư được cập nhật nhanh và đầy đủ nhất. Bạn đọc đừng quên để lại bình luận và chia sẻ, ủng hộ ra các chương mới nhất của truyện Chuyển Sinh Thành Tiêu Sư.', 'Rakima', '12/02/2022 04:27:28 pm', 'Truyện hành động', 0, 0, 144, 2, 11, 0, 0),
-(256, 'Tay bắn thiện xạ', 'tay-sung-ma-thuat-ban-tia-thep_1661340417.jpg', 'Túm lại là một bộ truyện cực kì dễ thương, dành cho các bạn muốn relax sau một ngày dài mệt mỏi. Truyện cho mọi lứa tuổi! Lee Kun Woo người từng muốn trở thành anh hùng trong suốt 11 năm chợt nhận ra con đường đó không phù hợp với bản thân, anh quyết định trở thành một nông dân, sống cuộc đời bình dị, nhưng mọi việc liệu có đơn giản như vậy!', 'Habaxi', '12/02/2022 04:30:26 pm', 'Truyện hot', 235, 0, 143, 2, 11, 1, 15000),
+(256, 'Tay bắn thiện xạ', 'tay-sung-ma-thuat-ban-tia-thep_1661340417.jpg', 'Túm lại là một bộ truyện cực kì dễ thương, dành cho các bạn muốn relax sau một ngày dài mệt mỏi. Truyện cho mọi lứa tuổi! Lee Kun Woo người từng muốn trở thành anh hùng trong suốt 11 năm chợt nhận ra con đường đó không phù hợp với bản thân, anh quyết định trở thành một nông dân, sống cuộc đời bình dị, nhưng mọi việc liệu có đơn giản như vậy!', 'Habaxi', '12/02/2022 04:30:26 pm', 'Truyện hot', 237, 0, 143, 2, 11, 1, 15000),
 (257, 'Cảm Xúc Ngọt Ngào', 'cuoc-phieu-luu-cua-be-sui_1660280592.jpg', 'Ten vừa trở thành học sinh trung học và chuyển vào sống tại kí túc xá theo lời rủ rê của người bạn thân. Tại đây, cô có dịp gặp gỡ và làm quen được với rất nhiều người tốt bụng và thú vị. Cuộc sống của Ten giờ bỗng tràn ngập những điều mới mẻ, và cả những cảm xúc mà cô chưa bao giờ biết đến.', 'Imasaku', '12/02/2022 04:31:11 pm', 'Truyện lãng mạn', 0, 0, 156, 2, 11, 0, 0),
 (258, 'Ngạo Thị Thiên Địa', 'giai-dieu-cua-nhanh-cay-kho-heo_1639812895.jpg', 'Truyện tranh Ngạo Thị Thiên Địa được cập nhật nhanh và đầy đủ nhất. Bạn đọc đừng quên để lại bình luận và chia sẻ, ủng hộ ra các chương mới nhất của truyện Ngạo Thị Thiên Địa.\r\n', 'QuaNiMa', '12/02/2022 04:32:31 pm', 'Sách cực hot', 0, 0, 144, 2, 11, 0, 0),
-(259, 'Xếp Hạng Bắt Nạt', 'the-novels-extra_1597483754.jpg', 'Neon mask, một streamer điên khùng không thể bắt giữ được cùng với kênh của mình lập một bảng xếp hạng các tên tội phạm chuyên bắt nạt học sinh khác và treo thưởng cho ai hạ được chúng.', 'Kamaniso', '12/02/2022 04:34:08 pm', 'Truyện kịch', 0, 0, 140, 2, 11, 0, 0),
-(260, ' Nàng Kiếm Yandere', 'tu-gio-ta-chinh-la-bac-thay-cua-phap-su_1669091200.jpg', 'Câu chuyện về một anh hùng vô danh muốn có sức mạnh đánh bại quỷ vương nên đã lập giao kèo với một thanh kiếm quyền năng,nhưng cái giá anh ấy phải trả nó lạ lắm...', 'Umitaka', '12/02/2022 04:36:23 pm', 'Kiếm hiệp', 0, 0, 142, 2, 11, 1, 26000),
+(259, 'Xếp Hạng Bắt Nạt', 'the-novels-extra_1597483754.jpg', 'Neon mask, một streamer điên khùng không thể bắt giữ được cùng với kênh của mình lập một bảng xếp hạng các tên tội phạm chuyên bắt nạt học sinh khác và treo thưởng cho ai hạ được chúng.', 'Kamaniso', '12/02/2022 04:34:08 pm', 'Truyện kịch', 1, 0, 140, 2, 11, 0, 0),
+(260, ' Nàng Kiếm Yandere', 'tu-gio-ta-chinh-la-bac-thay-cua-phap-su_1669091200.jpg', 'Câu chuyện về một anh hùng vô danh muốn có sức mạnh đánh bại quỷ vương nên đã lập giao kèo với một thanh kiếm quyền năng,nhưng cái giá anh ấy phải trả nó lạ lắm...', 'Umitaka', '12/02/2022 04:36:23 pm', 'Kiếm hiệp', 2, 0, 142, 2, 11, 1, 26000),
 (261, 'Tu Tiên Phải Dựa Vào Sugar Mommy', 'estio_1667375485.jpg', 'Tu tiên phải dựa vào Sugar mommy, lâm huyền bái nhập làm đệ tử của trưởng lão yếu nhất tiên môn, lại phát hiện sư phụ tùy ý cho pháp bảo, lại là pháp bảo thiên giai. Dùng nước ao tưới cây, không ngờ lại là linh dịch trân quý! Lâm huyền dựa vào tài nguyên nhiều tới nghịch thiên của sugar mommy này, một đường mạnh mẽ thẳng tiến. Một đường mở hack... Đừng GATO với ca, có giỏi các ngươi cũng đi kiếm Sugar mommy đi', 'Omanaki', '12/02/2022 04:37:07 pm', 'Truyện bí ẩn', 0, 0, 142, 2, 11, 0, 0),
 (262, 'Tinh Võ Thần Quyết', 'de-ba_1648198417.jpg', 'Quyền toái nhật nguyệt, chưởng thôn sơn hà\r\n\r\nĐạp nghịch thiên cường giả lộ, mỹ nhân làm bạn, tu luyện tinh võ truyền thừa, chấp chưởng quyền hành bát phương, thành tựu thần vương tối cao\r\n\r\nTừ thiếu nữ thiên tài ôn nhu, đáng yêu, quận chúa thân hình nóng bỏng tràn trề đến yêu tộc mỹ nữ thần bí, cao hơn nữa là nữ võ thần trong truyền thuyết tối cao', 'EnMaSu', '12/02/2022 04:38:48 pm', 'Truyện thịnh hành', 0, 0, 145, 2, 11, 0, 0),
 (263, 'Hóa Ra Đó Chính Là Tình Yêu', 'ke-rac-ruoi-khong-dang-duoc-yeu_1657001514.jpg', 'Sau khi thống nhất Vương quốc Quỷ và rời khỏi Lâu đài Quỷ được một thời gian, Quỷ vương Eligor (600 tuổi), người đang sống một cuộc sống tẻ nhạt, đã giải cứu một chàng trai khỏi sự xuất hiện của mình khi đang đi dạo. Một khuôn mặt mềm mại và mềm mại, một cậu bé hay cười với một biểu cảm dịu dàng, Jeremy!! Anh ta là một hiệp sĩ, tôi là ác quỷ!', 'LaKaMi', '12/02/2022 04:40:18 pm', 'Truyện lãng mạn', 0, 0, 156, 2, 11, 0, 0),
 (264, 'Itsudemo Jitaku Ni Kaerareru Ore Wa', 'toi-se-song-nhu-mot-hoang-tu_1636859317.jpg', 'bị bóc lột sức lao động ở công ty cũ, Amata Shirou quyết định thôi việc và chuyển đến nhà bà để sống. Không ngờ cậu tìm ra được một con đường bí mật đến thế giới khác đằng sau tủ đồ trong nhà bà. Từ đó Shirou quyết định làm giàu bằng cách bán đồ Nhật bản cho thế giới kia. Cùng xem câu chuyện làm giàu của một cậu chàng tay trắng bằng những kĩ năng độc lạ không ai có nhé!', 'MaTeMaSu', '12/02/2022 04:41:55 pm', 'Ẩm thực', 0, 0, 145, 2, 11, 0, 0),
-(265, 'Đại Chu Tiên Lại', 'toan-tri-doc-gia_1590622278.jpg', 'Xuyên việt qua thế giới Tiên hiệp, nơi mà yêu mị khắp nơi, quần ma loạn vũ, Lý Mộ ban đầu thực sự chỉ an ổn sống qua ngày, nhưng tiểu hồ ly mà hắn vô tình cứu được lại đột nhiên mở miệng nói tiếng người, rằng nó muốn lấy thân báo đáp...Đây là câu chuyện về một thanh niên hiện đại xuyên việt tới thế giới Tiên hiệp, trảm yêu trừ ma, giúp đỡ chính nghĩa.', 'LiMaCha', '12/02/2022 04:43:37 pm', 'Truyện viễn tưởng hay', 0, 0, 144, 2, 11, 0, 0),
-(266, ' Hệ Thống Gánh Con Mạnh Nhất', 'he-thong-ganh-con-manh-nhat_1667117666.jpg', 'Tần Xuyên phát hiện chỉ cần con của mình gây chuyện, hắn liền có thể mạnh lên\r\nThế là kiếp này, hắn bắt đầu troll con của mình đến cùng để tu tiên', 'Jakani', '12/02/2022 04:45:47 pm', 'Truyện hot', 0, 0, 141, 2, 11, 0, 0),
-(267, 'Bậc Thầy Thuần Hóa', 'bac-thay-thuan-hoa_1604461416.jpg', 'Mặc dù là một nhân vật Cung thủ cấp 93 trong bảng xếp hạng hàng đầu của Kailan, Ian quyết định xóa nó bất chấp mọi người xung quanh bảo anh không nên làm vậy. Tất cả là để chuyển sang một chức nghiệp ẩn mà anh có được một cách tình cờ.', 'Ganika', '12/02/2022 04:48:39 pm', 'Truyện hay', 0, 0, 143, 2, 11, 1, 5000),
-(268, 'Vạn Tướng Chi Vương', 'van-tuong-chi-vuong_1628657017.jpg', 'lại rơi vào nghịch cảnh 5 năm phong hầu , nếu không sẽ chết . \r\nTrong thiên địa , có vạn tướng. Mà lý lạc ta, cuối cùng sẽ trở thành Vạn tướng chi vương .', 'UchaMaNi', '12/02/2022 04:50:44 pm', 'Đánh nhau cực hay', 0, 0, 144, 2, 11, 0, 0),
-(269, 'Neet Dakedo Hello Work Ni', 'neet-dakedo-hello-work-ni-ittara-isekai-ni-tsuretekareta_1531966254.jpg', 'Bởi vì bản hợp đồng mà cậu ta đã ký, để sống sót thì cậu ta đã nhận được cheat vì cậu ta đã nghe được một sự thật éo thể tin được: Thế giới này sẽ bị phá hủy sau 20 năm nữa. Liệu một tên NEET có ngăn chặn được việc thế giới bị phá hủy hay không ?!', 'Vachani', '12/02/2022 04:52:47 pm', 'Truyện thịnh hành', 0, 0, 139, 2, 11, 1, 14000);
+(265, 'Đại Chu Tiên Lại', 'toan-tri-doc-gia_1590622278.jpg', 'Xuyên việt qua thế giới Tiên hiệp, nơi mà yêu mị khắp nơi, quần ma loạn vũ, Lý Mộ ban đầu thực sự chỉ an ổn sống qua ngày, nhưng tiểu hồ ly mà hắn vô tình cứu được lại đột nhiên mở miệng nói tiếng người, rằng nó muốn lấy thân báo đáp...Đây là câu chuyện về một thanh niên hiện đại xuyên việt tới thế giới Tiên hiệp, trảm yêu trừ ma, giúp đỡ chính nghĩa.', 'LiMaCha', '12/02/2022 04:43:37 pm', 'Truyện viễn tưởng hay', 3, 1, 144, 2, 11, 0, 0),
+(266, ' Hệ Thống Gánh Con Mạnh Nhất', 'he-thong-ganh-con-manh-nhat_1667117666.jpg', 'Tần Xuyên phát hiện chỉ cần con của mình gây chuyện, hắn liền có thể mạnh lên\r\nThế là kiếp này, hắn bắt đầu troll con của mình đến cùng để tu tiên', 'Jakani', '12/02/2022 04:45:47 pm', 'Truyện hot', 5, 0, 141, 2, 11, 0, 0),
+(267, 'Bậc Thầy Thuần Hóa', 'bac-thay-thuan-hoa_1604461416.jpg', 'Mặc dù là một nhân vật Cung thủ cấp 93 trong bảng xếp hạng hàng đầu của Kailan, Ian quyết định xóa nó bất chấp mọi người xung quanh bảo anh không nên làm vậy. Tất cả là để chuyển sang một chức nghiệp ẩn mà anh có được một cách tình cờ.', 'Ganika', '12/02/2022 04:48:39 pm', 'Truyện hay', 1, 0, 143, 2, 11, 1, 5000),
+(268, 'Vạn Tướng Chi Vương', 'van-tuong-chi-vuong_1628657017.jpg', 'lại rơi vào nghịch cảnh 5 năm phong hầu , nếu không sẽ chết . \r\nTrong thiên địa , có vạn tướng. Mà lý lạc ta, cuối cùng sẽ trở thành Vạn tướng chi vương .', 'a', '12/12/2022 12:03:33 am', '', 8, 1, 144, 2, 11, 1, 10000);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `comment`
+-- Cấu trúc bảng cho bảng `comment`
 --
 
 CREATE TABLE `comment` (
@@ -292,19 +281,19 @@ CREATE TABLE `comment` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `comment`
+-- Đang đổ dữ liệu cho bảng `comment`
 --
 
 INSERT INTO `comment` (`id`, `date`, `detail`, `comic_id`, `user_id`) VALUES
 (32, '12/02/2022 02:30:42 pm', 'qưe', 217, 11),
 (33, '12/02/2022 02:30:44 pm', 'eqwe', 217, 11),
-(34, '12/02/2022 02:31:03 pm', 'qưeqwe', 217, 19),
-(35, '12/02/2022 02:32:39 pm', 'qưe', 213, 11);
+(35, '12/02/2022 02:32:39 pm', 'qưe', 213, 11),
+(38, '12/10/2022 07:31:07 pm', 'hay', 217, 11);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `contact`
+-- Cấu trúc bảng cho bảng `contact`
 --
 
 CREATE TABLE `contact` (
@@ -315,7 +304,7 @@ CREATE TABLE `contact` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `contact`
+-- Đang đổ dữ liệu cho bảng `contact`
 --
 
 INSERT INTO `contact` (`id`, `name`, `email`, `comment`) VALUES
@@ -325,7 +314,7 @@ INSERT INTO `contact` (`id`, `name`, `email`, `comment`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `history_comic_user`
+-- Cấu trúc bảng cho bảng `history_comic_user`
 --
 
 CREATE TABLE `history_comic_user` (
@@ -335,19 +324,31 @@ CREATE TABLE `history_comic_user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `history_comic_user`
+-- Đang đổ dữ liệu cho bảng `history_comic_user`
 --
 
 INSERT INTO `history_comic_user` (`id`, `id_comic`, `id_user`) VALUES
 (5, 214, 11),
 (6, 213, 11),
 (7, 215, 11),
-(9, 217, 11);
+(9, 217, 11),
+(25, 260, 11),
+(26, 241, 11),
+(27, 242, 11),
+(29, 254, 11),
+(30, 252, 11),
+(31, 256, 11),
+(32, 266, 11),
+(33, 259, 11),
+(34, 250, 11),
+(38, 268, 11),
+(39, 267, 11),
+(40, 265, 11);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `images`
+-- Cấu trúc bảng cho bảng `images`
 --
 
 CREATE TABLE `images` (
@@ -357,7 +358,7 @@ CREATE TABLE `images` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `images`
+-- Đang đổ dữ liệu cho bảng `images`
 --
 
 INSERT INTO `images` (`id`, `name`, `id_chapter`) VALUES
@@ -407,14 +408,6 @@ INSERT INTO `images` (`id`, `name`, `id_chapter`) VALUES
 (309, '1_dtbcz.jpg', 15),
 (310, '2_sz4fw.jpg', 15),
 (311, '4_r5ce8.jpg', 15),
-(378, '0.jpg', 36),
-(379, '1.jpg', 36),
-(380, '2.jpg', 36),
-(381, 'than-gui-nang-bach-tuyet_1669254812.jpg', 36),
-(382, '0.jpg', 37),
-(383, '1.jpg', 37),
-(384, '2.jpg', 37),
-(385, 'than-gui-nang-bach-tuyet_1669254812.jpg', 37),
 (386, '1.jpg', 38),
 (387, '2.jpg', 38),
 (388, '3.jpg', 38),
@@ -698,26 +691,14 @@ INSERT INTO `images` (`id`, `name`, `id_chapter`) VALUES
 (666, '1_dtbcz.jpg', 131),
 (667, '2_sz4fw.jpg', 131),
 (668, '4_r5ce8.jpg', 131),
-(669, '2.jpg', 132),
-(670, '4.jpg', 132),
-(671, '6.jpg', 132),
 (672, '1_kctnu.jpg', 133),
 (673, '2_q7nur.jpg', 133),
-(674, '3.jpg', 133),
-(675, '1.jpg', 134),
-(676, '2.jpg', 134),
-(677, '3.jpg', 134),
-(678, '0.jpg', 135),
-(679, '1.jpg', 135),
-(680, '2.jpg', 135),
-(681, '15.jpg', 136),
-(682, '16.jpg', 136),
-(683, '17.jpg', 136);
+(674, '3.jpg', 133);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `love`
+-- Cấu trúc bảng cho bảng `love`
 --
 
 CREATE TABLE `love` (
@@ -726,16 +707,18 @@ CREATE TABLE `love` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `love`
+-- Đang đổ dữ liệu cho bảng `love`
 --
 
 INSERT INTO `love` (`id_comic`, `id_user`) VALUES
-(214, 11);
+(217, 11),
+(268, 11),
+(265, 11);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `roles`
+-- Cấu trúc bảng cho bảng `roles`
 --
 
 CREATE TABLE `roles` (
@@ -744,7 +727,7 @@ CREATE TABLE `roles` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `roles`
+-- Đang đổ dữ liệu cho bảng `roles`
 --
 
 INSERT INTO `roles` (`id`, `name`) VALUES
@@ -755,7 +738,7 @@ INSERT INTO `roles` (`id`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `thongbao`
+-- Cấu trúc bảng cho bảng `thongbao`
 --
 
 CREATE TABLE `thongbao` (
@@ -765,10 +748,20 @@ CREATE TABLE `thongbao` (
   `date` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- Đang đổ dữ liệu cho bảng `thongbao`
+--
+
+INSERT INTO `thongbao` (`id`, `id_user`, `content`, `date`) VALUES
+(7, 11, 'bạn không được duyệt với lí do a', '12/07/2022 02:06:55 am'),
+(8, 11, 'bạn không được duyệt với lí do a', '12/07/2022 03:38:24 am'),
+(9, 11, 'bạn đã được cộng 120000coin', '12/07/2022 03:38:31 am'),
+(13, 11, 'bạn đã được cộng 20,000 coin', '12/13/2022 07:24:39 pm');
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user`
+-- Cấu trúc bảng cho bảng `user`
 --
 
 CREATE TABLE `user` (
@@ -783,40 +776,42 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
--- Dumping data for table `user`
+-- Đang đổ dữ liệu cho bảng `user`
 --
 
 INSERT INTO `user` (`id`, `email`, `password`, `name`, `phone`, `address`, `role`, `coin`) VALUES
-(11, 'a@gmail.com', '$2y$10$c47ALXMznVabOANu8bNuJ.fsO2Q/z0iqgdLPBahCZ3UP7X8XTzWQ2', 'abc', '0868985927', 'Hà Nội', 1, '395478'),
-(19, 'b@gmail.com', '$2y$10$GUnC49thAB8AilB224uqy..gQFqKwFm0kL6jg3lbyOJOWWh90Z1h.', 'ads', '0868985922', 'hà Nội', 3, NULL),
-(20, 'c@gmail.com', '$2y$10$echwn6tk8QEq.q9K7Rw1SuyITQQLndy8yMo6IhxyeH3bC7fiTybli', 'gbh', '0868985922', 'Hà Nội', 3, NULL);
+(11, 'a@gmail.com', '$2y$10$c47ALXMznVabOANu8bNuJ.fsO2Q/z0iqgdLPBahCZ3UP7X8XTzWQ2', 'abc', '0868985927', 'Hà Nội', 1, '509478'),
+(21, 'd@gmail.com', '$2y$10$P8UAugOFc4XsS4LMiPEn1eOQwxYN/M/qcghje/zjKIXWIkeymRrvC', 'a', '0858592457', 'ABC', 3, NULL),
+(22, 'l@gmail.com', '$2y$10$nehcmE5oeq9BWAcmyknTqOTD.cZxa6XcnQ.OC4RRenh/BotR3Q5Xe', 'KOL', '0856325475', 'ABC', 2, NULL),
+(23, 'f@gmail.com', '$2y$10$6jILUFTvIX5xFigOtEaw/OGC6/bVzvPZXouew6x3A0PU9ncpVNLim', 'klm', '0937267362', 'Hà Nội', 3, NULL),
+(24, 'phamduc1823@gmail.com', '$2y$10$Vn9BL2MEdonr6pYIcKDvnuvqjG2lWpGkzvnjFGCqDYDeVIYOIlPPy', 'Đức phạm', '0868985927', 'Hà Nội', 1, NULL);
 
 --
--- Indexes for dumped tables
+-- Chỉ mục cho các bảng đã đổ
 --
 
 --
--- Indexes for table `bill`
+-- Chỉ mục cho bảng `bill`
 --
 ALTER TABLE `bill`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_user` (`id_user`);
 
 --
--- Indexes for table `category`
+-- Chỉ mục cho bảng `category`
 --
 ALTER TABLE `category`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `chapter`
+-- Chỉ mục cho bảng `chapter`
 --
 ALTER TABLE `chapter`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_comic` (`id_comic`);
 
 --
--- Indexes for table `comic`
+-- Chỉ mục cho bảng `comic`
 --
 ALTER TABLE `comic`
   ADD PRIMARY KEY (`id`),
@@ -824,7 +819,7 @@ ALTER TABLE `comic`
   ADD KEY `fk_comic_poster` (`poster`);
 
 --
--- Indexes for table `comment`
+-- Chỉ mục cho bảng `comment`
 --
 ALTER TABLE `comment`
   ADD PRIMARY KEY (`id`),
@@ -832,13 +827,13 @@ ALTER TABLE `comment`
   ADD KEY `fk_user_comment` (`user_id`);
 
 --
--- Indexes for table `contact`
+-- Chỉ mục cho bảng `contact`
 --
 ALTER TABLE `contact`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `history_comic_user`
+-- Chỉ mục cho bảng `history_comic_user`
 --
 ALTER TABLE `history_comic_user`
   ADD PRIMARY KEY (`id`),
@@ -846,33 +841,34 @@ ALTER TABLE `history_comic_user`
   ADD KEY `fk_history_comic` (`id_comic`);
 
 --
--- Indexes for table `images`
+-- Chỉ mục cho bảng `images`
 --
 ALTER TABLE `images`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_chapter` (`id_chapter`);
 
 --
--- Indexes for table `love`
+-- Chỉ mục cho bảng `love`
 --
 ALTER TABLE `love`
   ADD KEY `fk_comic_love` (`id_comic`),
   ADD KEY `fk_user_love` (`id_user`);
 
 --
--- Indexes for table `roles`
+-- Chỉ mục cho bảng `roles`
 --
 ALTER TABLE `roles`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `thongbao`
+-- Chỉ mục cho bảng `thongbao`
 --
 ALTER TABLE `thongbao`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_foreign_key_thongbao_user` (`id_user`);
 
 --
--- Indexes for table `user`
+-- Chỉ mục cho bảng `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`id`),
@@ -880,127 +876,133 @@ ALTER TABLE `user`
   ADD KEY `id` (`id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT cho các bảng đã đổ
 --
 
 --
--- AUTO_INCREMENT for table `bill`
+-- AUTO_INCREMENT cho bảng `bill`
 --
 ALTER TABLE `bill`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
--- AUTO_INCREMENT for table `category`
+-- AUTO_INCREMENT cho bảng `category`
 --
 ALTER TABLE `category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=157;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=161;
 
 --
--- AUTO_INCREMENT for table `chapter`
+-- AUTO_INCREMENT cho bảng `chapter`
 --
 ALTER TABLE `chapter`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=137;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=161;
 
 --
--- AUTO_INCREMENT for table `comic`
+-- AUTO_INCREMENT cho bảng `comic`
 --
 ALTER TABLE `comic`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=270;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=282;
 
 --
--- AUTO_INCREMENT for table `comment`
+-- AUTO_INCREMENT cho bảng `comment`
 --
 ALTER TABLE `comment`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
--- AUTO_INCREMENT for table `contact`
+-- AUTO_INCREMENT cho bảng `contact`
 --
 ALTER TABLE `contact`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT for table `history_comic_user`
+-- AUTO_INCREMENT cho bảng `history_comic_user`
 --
 ALTER TABLE `history_comic_user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
--- AUTO_INCREMENT for table `images`
+-- AUTO_INCREMENT cho bảng `images`
 --
 ALTER TABLE `images`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=684;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=787;
 
 --
--- AUTO_INCREMENT for table `roles`
+-- AUTO_INCREMENT cho bảng `roles`
 --
 ALTER TABLE `roles`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `thongbao`
+-- AUTO_INCREMENT cho bảng `thongbao`
 --
 ALTER TABLE `thongbao`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
--- AUTO_INCREMENT for table `user`
+-- AUTO_INCREMENT cho bảng `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
--- Constraints for dumped tables
+-- Các ràng buộc cho các bảng đã đổ
 --
 
 --
--- Constraints for table `bill`
+-- Các ràng buộc cho bảng `bill`
 --
 ALTER TABLE `bill`
   ADD CONSTRAINT `fk_user` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`);
 
 --
--- Constraints for table `chapter`
+-- Các ràng buộc cho bảng `chapter`
 --
 ALTER TABLE `chapter`
   ADD CONSTRAINT `fk_comic` FOREIGN KEY (`id_comic`) REFERENCES `comic` (`id`);
 
 --
--- Constraints for table `comic`
+-- Các ràng buộc cho bảng `comic`
 --
 ALTER TABLE `comic`
   ADD CONSTRAINT `fk_category` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`),
   ADD CONSTRAINT `fk_comic_poster` FOREIGN KEY (`poster`) REFERENCES `user` (`id`);
 
 --
--- Constraints for table `comment`
+-- Các ràng buộc cho bảng `comment`
 --
 ALTER TABLE `comment`
   ADD CONSTRAINT `fk_comic_comment` FOREIGN KEY (`comic_id`) REFERENCES `comic` (`id`),
   ADD CONSTRAINT `fk_user_comment` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
 
 --
--- Constraints for table `history_comic_user`
+-- Các ràng buộc cho bảng `history_comic_user`
 --
 ALTER TABLE `history_comic_user`
   ADD CONSTRAINT `fk_history_comic` FOREIGN KEY (`id_comic`) REFERENCES `comic` (`id`),
   ADD CONSTRAINT `fk_history_user` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`);
 
 --
--- Constraints for table `images`
+-- Các ràng buộc cho bảng `images`
 --
 ALTER TABLE `images`
   ADD CONSTRAINT `fk_chapter` FOREIGN KEY (`id_chapter`) REFERENCES `chapter` (`id`);
 
 --
--- Constraints for table `love`
+-- Các ràng buộc cho bảng `love`
 --
 ALTER TABLE `love`
   ADD CONSTRAINT `fk_comic_love` FOREIGN KEY (`id_comic`) REFERENCES `comic` (`id`),
   ADD CONSTRAINT `fk_user_love` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`);
 
 --
--- Constraints for table `user`
+-- Các ràng buộc cho bảng `thongbao`
+--
+ALTER TABLE `thongbao`
+  ADD CONSTRAINT `fk_foreign_key_thongbao_user` FOREIGN KEY (`id_user`) REFERENCES `user` (`id`);
+
+--
+-- Các ràng buộc cho bảng `user`
 --
 ALTER TABLE `user`
   ADD CONSTRAINT `fk_user_role` FOREIGN KEY (`role`) REFERENCES `roles` (`id`);

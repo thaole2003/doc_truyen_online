@@ -11,7 +11,7 @@
 //     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 //     return $conn;
 // }
-//localhost
+// //localhost
 function pdo_get_connection(){
     $dburl = "mysql:host=localhost;dbname=du_an_1;charset=utf8";
     $username = 'root';
